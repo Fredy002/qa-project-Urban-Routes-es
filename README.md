@@ -1,7 +1,3 @@
-Here’s the `README.md` for the **Urban Routes** automation project, written in English:
-
----
-
 # Urban Routes Automation
 
 This project automates the process of ordering a taxi on the **Urban Routes** platform. It uses **Selenium** to automate interactions with the website, from setting routes to confirming the taxi request.
