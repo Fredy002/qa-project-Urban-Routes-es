@@ -4,8 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.chrome.service import Service
-from selenium.common.exceptions import TimeoutException
-import traceback
+import  time
 
 # No modificar
 def retrieve_phone_code(driver) -> str:
@@ -213,7 +212,6 @@ class UrbanRoutesPage:
         self.driver.execute_script("arguments[0].click();", blanket_switch_element)
 
     def request_two_ice_creams(self):
-        import time
         self.open_requirements_section()
         self.wait_for_overlay_to_disappear()
         ice_cream_plus = WebDriverWait(self.driver, 10).until(
@@ -221,7 +219,7 @@ class UrbanRoutesPage:
         )
         for _ in range(2):
             ice_cream_plus.click()
-            time.sleep(1)
+            time.sleep(0.5)
 
     def wait_for_overlay_to_disappear(self):
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.CLASS_NAME, 'overlay')))
@@ -233,7 +231,6 @@ class UrbanRoutesPage:
         find_taxi_button_element.click()
 
     def wait_for_driver_info(self):
-        import  time
         WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(self.driver_info_modal))
         time.sleep(5)
 
