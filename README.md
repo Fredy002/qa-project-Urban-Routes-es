@@ -1,101 +1,179 @@
 # Urban Routes Automation
 
-This project automates the process of ordering a taxi on the **Urban Routes** platform. It uses **Selenium** to automate interactions with the website, from setting routes to confirming the taxi request.
+Automate the process of ordering a taxi on the **Urban Routes** platform using **Selenium WebDriver**. This project simulates user interactions with the website, from setting up the route to confirming the taxi request, including optional features like adding special requests.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Project Structure](#project-structure)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Running the Tests](#running-the-tests)
+- [Features](#features)
+- [Implementation Details](#implementation-details)
+- [Additional Notes](#additional-notes)
+- [Contact](#contact)
+
+## Overview
+
+This project provides an automated testing suite for the **Urban Routes** web application. It uses **Selenium WebDriver** to perform end-to-end testing of the taxi ordering process, ensuring that all functionalities work as expected.
+
+## Project Structure
+
+- **`data.py`**: Contains input data and configuration variables used throughout the tests.
+- **`main.py`**: The main test script containing the `TestUrbanRoutes` class with all test cases.
+- **`urban_routes_page.py`**: Implements the `UrbanRoutesPage` class, encapsulating all page interactions.
+- **`utilities.py`**: Includes utility functions such as `retrieve_phone_code` for additional functionalities.
 
 ## Requirements
 
 - **Python 3.7+**
-- **Selenium WebDriver** (for browser automation)
-- **ChromeDriver** (to interact with Google Chrome)
+- **Selenium WebDriver** (`selenium`)
+- **ChromeDriver** (compatible with your installed version of Google Chrome)
+- **pytest** (for running the tests)
 
 ### Python Libraries
 
-- **selenium**
-  ```bash
-  pip install selenium
-  ```
+Install the required Python libraries using pip:
 
-## Environment Setup
-
-1. **Install dependencies**:
-   Make sure you have installed the necessary dependencies, such as Selenium.
-   ```bash
-   pip install selenium
-   ```
-
-2. **Download ChromeDriver**:
-   You need **ChromeDriver** to match your installed version of Google Chrome. You can download it from [here](https://sites.google.com/a/chromium.org/chromedriver/).
-
-   Ensure the `chromedriver` is accessible from your `PATH` or specify its location in the code if necessary.
-
-## Project Structure
-
-### Test URL
-
-The project interacts with the following **Urban Routes** URL:
-
-```python
-urban_routes_url = 'https://cnt-63745af8-6330-47b4-89f7-1161024645a6.containerhub.tripleten-services.com?lng=es'
+```bash
+pip install selenium pytest
 ```
 
-### Input Data
+## Installation
 
-These are the input values used for the automated tests:
+1. **Clone the repository**:
 
-- **Starting address**: `East 2nd Street, 601`
-- **Destination address**: `1300 1st St`
-- **Phone number**: `+1 123 123 12 12`
-- **Card number**: `1234 5678 9100`
-- **Card code**: `111`
-- **Message for driver**: `Camino al museo` (Heading to the museum)
+   ```bash
+   git clone https://github.com/Fredy002/urban-routes-automation.git
+   cd urban-routes-automation
+   ```
 
-### Main Classes and Methods
+2. **Install dependencies**:
 
-- **`UrbanRoutesPage`**:
-  This class contains methods to interact with the web page, such as:
-  
-  - **`set_route`**: Set the trip’s starting and destination addresses.
-  - **`select_personal_mode`**: Select the "Personal" mode of transportation.
-  - **`request_taxi`**: Place a taxi request on the platform.
-  - **`add_credit_card`**: Add credit card details for payment.
-  - **`write_message_to_driver`**: Send a message to the driver.
-  - **`request_blanket_and_tissues`**: Request blankets and tissues.
-  - **`request_two_ice_creams`**: Add two ice creams to the order.
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-- **`TestUrbanRoutes`**:
-  This class contains the automated tests. The main methods include:
-  
-  - **`test_set_route`**: Verifies that the route (from and to addresses) is set correctly.
-  - **`test_complete_taxi_order`**: A full test that performs the entire process of ordering a taxi, from start to driver confirmation.
+   *If a `requirements.txt` file is not provided, you can install the necessary packages as shown in the [Python Libraries](#python-libraries) section.*
+
+3. **Download ChromeDriver**:
+
+   - Download **ChromeDriver** from the [official website](https://chromedriver.chromium.org/downloads) matching your installed version of Google Chrome.
+   - Place the `chromedriver` executable in a directory included in your system's `PATH`, or specify its location when initializing the WebDriver in the code.
+
+## Configuration
+
+Update the `data.py` file with any necessary configurations or input data. The default values are:
+
+```python
+# data.py
+
+urban_routes_url = 'https://cnt-63745af8-6330-47b4-89f7-1161024645a6.containerhub.tripleten-services.com?lng=es'
+address_from = 'East 2nd Street, 601'
+address_to = '1300 1st St'
+phone_number = '+1 123 123 12 12'
+card_number = '1234 5678 9100'
+card_code = '111'
+message_for_driver = 'Camino al museo'  # (Heading to the museum)
+```
 
 ## Running the Tests
 
-1. **Configure the WebDriver**:
-   The project is set up to use Google Chrome as the default browser. Make sure you have **ChromeDriver** installed and matching your browser version.
+You can run the tests using **pytest** or directly from the script.
 
-2. **Execution**:
+### Using pytest
 
-   You can run the tests using `pytest` or directly from the script:
+```bash
+pytest main.py
+```
 
-   ```bash
-   pytest main.py
-   ```
+### Directly from the Script
 
-   Alternatively, you can execute the script directly if you are using **PyCharm** or another IDE.
+If you prefer, you can run the script directly:
 
-3. **Expected behavior**:
-   - The script will open the **Urban Routes** page, enter the starting and destination addresses, select the "Personal" transportation mode, enter the phone number and credit card details, send a message to the driver, and finally request a taxi.
-   - At the end of the process, the test will display the driver details if successful.
+```bash
+python main.py
+```
+
+### Notes
+
+- Ensure that the **ChromeDriver** is properly installed and accessible.
+- Make sure all dependencies are installed and up-to-date.
+- Adjust the waiting times or selectors if the web application has changed.
+
+## Features
+
+The automated tests cover the following features:
+
+- **Setting Up the Route**: Inputs the starting and destination addresses.
+- **Selecting Transportation Mode**: Chooses the "Personal" mode.
+- **Requesting a Taxi**: Initiates a taxi request.
+- **Selecting Tariff**: Chooses the "Comfort" tariff.
+- **Entering Phone Number**: Inputs the phone number and retrieves the confirmation code automatically.
+- **Adding Payment Method**: Inputs credit card details for payment.
+- **Sending Message to Driver**: Writes a custom message to the driver.
+- **Adding Special Requests**: Requests a blanket, tissues, and two ice creams.
+- **Confirming Taxi Search**: Initiates the search for a taxi and waits for driver information.
+
+## Implementation Details
+
+### Classes and Methods
+
+#### `UrbanRoutesPage` (in `urban_routes_page.py`)
+
+Encapsulates all interactions with the Urban Routes web page.
+
+Key methods include:
+
+- **`set_route(from_address, to_address)`**: Sets the starting and destination addresses.
+- **`select_personal_mode()`**: Selects the "Personal" transportation mode.
+- **`click_taxi_icon()`**: Clicks the taxi icon to select the taxi service.
+- **`request_taxi()`**: Clicks the button to request a taxi.
+- **`select_comfort_tariff()`**: Chooses the "Comfort" tariff option.
+- **`enter_phone_number(phone_number)`**: Inputs the phone number and handles the confirmation code retrieval.
+- **`add_credit_card(card_number, card_code)`**: Inputs credit card information.
+- **`write_message_to_driver(message)`**: Sends a custom message to the driver.
+- **`request_blanket_and_tissues()`**: Requests additional items like blanket and tissues.
+- **`request_two_ice_creams()`**: Adds two ice creams to the order.
+- **`find_taxi()`**: Initiates the search for a taxi.
+- **`wait_for_driver_info()`**: Waits until the driver information is displayed.
+
+#### `TestUrbanRoutes` (in `main.py`)
+
+Contains the test cases for the Urban Routes automation.
+
+Key test methods include:
+
+- **`test_set_route()`**: Verifies that the starting and destination addresses are set correctly.
+- **`test_select_personal_mode()`**: Checks if the "Personal" transportation mode is selected.
+- **`test_click_taxi_icon()`**: Verifies the selection of the taxi service.
+- **`test_request_taxi()`**: Confirms that the taxi request process is initiated.
+- **`test_select_comfort_tariff()`**: Checks if the "Comfort" tariff is selected.
+- **`test_enter_phone_number()`**: Validates phone number entry and confirmation code handling.
+- **`test_add_credit_card()`**: Verifies that credit card details are added successfully.
+- **`test_write_message_to_driver()`**: Checks if the message to the driver is set.
+- **`test_request_blanket_and_tissues()`**: Ensures that special requests are added.
+- **`test_request_two_ice_creams()`**: Verifies the addition of two ice creams.
+- **`test_find_taxi()`**: Confirms that the taxi search is initiated.
+- **`test_wait_for_driver_info()`**: Checks if the driver information is displayed after searching.
+
+### Utilities
+
+- **`retrieve_phone_code(driver)`** (in `utilities.py`): Intercepts and retrieves the phone confirmation code from browser logs.
 
 ## Additional Notes
 
-- The script retrieves the phone confirmation code from browser logs using the **`retrieve_phone_code`** method.
-- **JavaScript** is used to click on certain elements that might be hidden or covered by other layers.
-- The functionality automates the full taxi request process, including adding optional details like blankets and ice creams.
-  
+- **Browser Compatibility**: The script is designed for Google Chrome. Ensure that the ChromeDriver version matches your browser version.
+- **Dynamic Elements**: The script uses explicit waits to handle dynamic elements and loading times.
+- **JavaScript Execution**: In some cases, JavaScript is used to interact with elements that are not easily clickable using standard Selenium methods.
+- **Error Handling**: The script includes exception handling to manage potential issues during execution.
+- **Modular Design**: The project follows a modular design, separating concerns into different files and classes for better maintainability.
+
 ## Contact
 
-- **GitHub:** [Fredy002](https://github.com/Fredy002)
-- **LinkedIn:** [Fredy Antonio Almeyda Alania](https://www.linkedin.com/in/fredy-antonio-almeyda-alania/)
+- **GitHub**: [Fredy002](https://github.com/Fredy002)
+- **LinkedIn**: [Fredy Antonio Almeyda Alania](https://www.linkedin.com/in/fredy-antonio-almeyda-alania/)
 
-Feel free to explore the code to understand how the API functionalities are implemented and maybe tweak some values to see how the application behaves. Happy coding!
+Feel free to explore the code, raise issues, or contribute to the project. If you have any questions or need assistance, don't hesitate to reach out.
